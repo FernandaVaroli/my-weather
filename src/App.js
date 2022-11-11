@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import GoogleMapReact from 'google-map-react';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <section className="header">
+       <div className="weather-today">21°</div>
+
+       <div className="search">
+
+          <div className='search-item'>
+            <input placeholder="Enter adress" />
+            <button className="button" type="submit">Search</button>
+          </div>
+
+       </div>
+
+      </section>
+      
+      <section className='side-bar'>
+        <div>
+          
+        </div>
+      </section>
     </div>
   );
 }
