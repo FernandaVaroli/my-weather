@@ -1,5 +1,5 @@
-import GoogleMapReact from 'google-map-react';
 import './App.css';
+import Maps from './Maps/Maps';
 
 function App() {
   return (
@@ -17,12 +17,17 @@ function App() {
        </div>
 
       </section>
-      
-      <section className='side-bar'>
-        <div>
+
+        <section className='side-bar'>
+        <Maps />
+        </section>
+        <section>
           
-        </div>
-      </section>
+        </section>
+        
+      
+      
+    
     </div>
   );
 }
