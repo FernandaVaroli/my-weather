@@ -1,5 +1,5 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
-import { GoogleMap, useLoadScript, Marker, useGoogleMap } from "@react-google-maps/api";
+import React, { useState } from "react";
+import { GoogleMap, useLoadScript, Marker, InfoWindow, OverlayView } from "@react-google-maps/api";
 import './Maps.css';
 import usePlacesAutocomple, {getGeocode, getLatLng} from "use-places-autocomplete";
 import {
@@ -23,29 +23,56 @@ export default function Maps(){
 
 function Map() {
 
-    const center = useMemo(() => ({lat:43.45, lng:-80.49}), []);
-    const [selected, setSelected] = useState(null);
+   
+    const [markerPosition, setMarkerPosition] = useState(null);
     
+    
+    React.useEffect(() => {
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition((position) => {
+                setMarkerPosition({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                });
+        })}
+    }, [])
 
     return (
     <>
         <div className="places-container">
-            <PlacesAutocomplete setSelected={setSelected} />
+            <PlacesAutocomplete setCoordinatesCallback={setMarkerPosition} />
         </div>
 
         <GoogleMap 
             mapContainerClassName = "map-container"
             zoom={10}
-            center={center}
+            center={markerPosition || {lat:43.45, lng:-80.49}}
         >
-            {selected && <Marker position={selected} />}
+            {markerPosition && <Marker position={markerPosition} />}
+
+            <OverlayView 
+                key='markerWeather'
+                position={markerPosition}
+                mapPaneName="markerLayer"            
+            >    
+                <div  
+                    style={{
+                    background: `#203254`,
+                    padding: `7px 12px`,
+                    fontSize: '11px',
+                    color: `white`,
+                    borderRadius: '4px',
+                }}> 
+                    21°C
+                </div>
+            </OverlayView>
         </GoogleMap>
 
         </>
     )
 }
 
-const PlacesAutocomplete = ({setSelected}) => {
+const PlacesAutocomplete = ({setCoordinatesCallback}) => {
     const {
         ready,
         value,
@@ -60,7 +87,7 @@ const PlacesAutocomplete = ({setSelected}) => {
 
         const results = await getGeocode({address});
         const {lat, lng} = await getLatLng(results[0]); 
-        setSelected({lat, lng});
+        setCoordinatesCallback({lat, lng});
     }
 
     return <Combobox onSelect={handleSelect}>
