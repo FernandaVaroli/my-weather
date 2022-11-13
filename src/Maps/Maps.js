@@ -22,9 +22,8 @@ export default function Maps(){
 
 }
 
-const api_endpoint = `https://api.openweathermap.org/data/2.5/weather?`;
-const api_key = process.env.REACT_APP_WEATHER_KEY;
-const cel_metrics = `metric`;
+
+const api_endpoint_forecast = `https://api.open-meteo.com/v1/forecast?`;
 
 function Map() {
 
@@ -44,10 +43,10 @@ function Map() {
 
     React.useEffect(() => {
         if(markerPosition && markerPosition.lat && markerPosition.lng){
-            axios.get(`${api_endpoint}lat=${markerPosition.lat}&lon=${markerPosition.lng}&appid=${api_key}&units=${cel_metrics}`).then((response) => {
+
+            axios.get(`${api_endpoint_forecast}latitude=${markerPosition.lat}&longitude=${markerPosition.lng}&daily=temperature_2m_max,temperature_2m_min&current_weather=true&timezone=America/Fortaleza`).then((response) => {
                 setResponseData(response.data)
             })
-
             
         }
         
@@ -58,6 +57,13 @@ function Map() {
         <div className="places-container">
             <PlacesAutocomplete setCoordinatesCallback={setMarkerPosition} />
         </div>
+
+        <div className="daily-temp">
+            <p className="temperature">{responseData.daily && responseData.daily.temperature_2m_max}</p>
+            <p className="date">{responseData.daily && responseData.daily.time}</p>
+        </div>
+
+        
 
         <GoogleMap 
             mapContainerClassName = "map-container"
@@ -79,7 +85,7 @@ function Map() {
                     color: `white`,
                     borderRadius: '4px',
                 }}> 
-                    <p>{responseData.main && responseData.main.temp}</p>
+                    <p>{responseData.current_weather && responseData.current_weather.temperature}</p>
                 </div>
             </OverlayView> }
             
