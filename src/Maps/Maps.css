@@ -1,10 +1,30 @@
+@media (min-width: 769px) and (max-width: 1042px) {
+    .places-container{
+        top: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .places-container{
+        bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .daily-temp{
+        visibility: hidden;
+    }
+    
+}
+
+
 .places-container{
     position: absolute;
-    top: 10px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     width: 300px;
+    background-color: white;
 }
 
 .map-container {

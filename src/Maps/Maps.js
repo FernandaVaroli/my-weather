@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GoogleMap, useLoadScript, Marker, OverlayView } from "@react-google-maps/api";
 import './Maps.css';
+import DailyTemp from "./DailyTemp";
 import axios from "axios";
 import usePlacesAutocomple, {getGeocode, getLatLng} from "use-places-autocomplete";
 import {
@@ -59,8 +60,12 @@ function Map() {
         </div>
 
         <div className="daily-temp">
-            <p className="temperature">{responseData.daily && responseData.daily.temperature_2m_max}</p>
-            <p className="date">{responseData.daily && responseData.daily.time}</p>
+
+            <DailyTemp 
+                dailyList={responseData.daily}>
+
+                </DailyTemp>
+            
         </div>
 
         
