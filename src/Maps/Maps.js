@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { GoogleMap, useLoadScript, Marker, InfoWindow, OverlayView } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker, OverlayView } from "@react-google-maps/api";
 import './Maps.css';
+import axios from "axios";
 import usePlacesAutocomple, {getGeocode, getLatLng} from "use-places-autocomplete";
 import {
     Combobox,
@@ -21,11 +22,14 @@ export default function Maps(){
 
 }
 
+const api_endpoint = `https://api.openweathermap.org/data/2.5/weather?`;
+const api_key = process.env.REACT_APP_WEATHER_KEY;
+const cel_metrics = `metric`;
+
 function Map() {
 
-   
     const [markerPosition, setMarkerPosition] = useState(null);
-    
+    const [responseData, setResponseData] = useState({})
     
     React.useEffect(() => {
         if(navigator.geolocation){
@@ -35,7 +39,19 @@ function Map() {
                     lng: position.coords.longitude
                 });
         })}
+
     }, [])
+
+    React.useEffect(() => {
+        if(markerPosition && markerPosition.lat && markerPosition.lng){
+            axios.get(`${api_endpoint}lat=${markerPosition.lat}&lon=${markerPosition.lng}&appid=${api_key}&units=${cel_metrics}`).then((response) => {
+                setResponseData(response.data)
+            })
+
+            
+        }
+        
+    }, [markerPosition])
 
     return (
     <>
@@ -50,7 +66,7 @@ function Map() {
         >
             {markerPosition && <Marker position={markerPosition} />}
 
-            <OverlayView 
+            { markerPosition && <OverlayView 
                 key='markerWeather'
                 position={markerPosition}
                 mapPaneName="markerLayer"            
@@ -63,9 +79,10 @@ function Map() {
                     color: `white`,
                     borderRadius: '4px',
                 }}> 
-                    21°C
+                    <p>{responseData.main && responseData.main.temp}</p>
                 </div>
-            </OverlayView>
+            </OverlayView> }
+            
         </GoogleMap>
 
         </>

@@ -3,9 +3,9 @@ import Maps from './Maps/Maps';
 
 function App() {
   return (
-        <section>
+       
         <Maps />
-        </section>
+        
     
   );
 }
