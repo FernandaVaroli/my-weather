@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GoogleMap, useLoadScript, Marker, OverlayView } from "@react-google-maps/api";
 import './Maps.css';
-import DailyTemp from "./DailyTemp";
+import DailyTemp from "../DailyTemp/DailyTemp";
 import axios from "axios";
 import PlacesAutocomplete from "../PlacesAutoComplete/PlacesAutoComplete";
 
