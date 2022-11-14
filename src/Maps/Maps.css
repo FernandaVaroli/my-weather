@@ -1,22 +1,22 @@
-@media (min-width: 769px) and (max-width: 1042px) {
+@media (min-width: 769px){
     .places-container{
         top: 10px;
     }
+    
 }
 
 @media screen and (max-width: 768px) {
     .places-container{
         bottom: 10px;
+        
     }
 }
 
-@media screen and (max-width: 320px) {
-    .daily-temp{
-        visibility: hidden;
-    }
-    
+.daily-temp-icon{
+    width: 100%;
+    height: 100%;
+    color: rgb(38, 39, 39);
 }
-
 
 .places-container{
     position: absolute;
@@ -25,6 +25,11 @@
     z-index: 10;
     width: 300px;
     background-color: white;
+}
+
+.places-container-list{
+    background-color: white;
+    list-style: none;
 }
 
 .map-container {
@@ -43,3 +48,6 @@
     z-index: 10;
     width: 300px;
 }
+
+
+

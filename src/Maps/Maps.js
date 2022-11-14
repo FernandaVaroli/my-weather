@@ -10,7 +10,8 @@ import {
     ComboboxPopover,
     ComboboxList,
     ComboboxOption
-} from "@reach/combobox"
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
 
 export default function Maps(){
     const { isLoaded } = useLoadScript({
@@ -56,9 +57,9 @@ function Map() {
     return (
     <>
         <div className="places-container">
-            <PlacesAutocomplete setCoordinatesCallback={setMarkerPosition} />
+            <PlacesAutocomplete className="places-container-list" setCoordinatesCallback={setMarkerPosition} />
         </div>
-
+      
         <div className="daily-temp">
 
             <DailyTemp 
@@ -67,6 +68,7 @@ function Map() {
                 </DailyTemp>
             
         </div>
+
 
         
 
