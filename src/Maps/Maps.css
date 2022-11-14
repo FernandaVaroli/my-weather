@@ -1,6 +1,11 @@
+body{
+    margin: 0;
+}
+
 @media (min-width: 769px){
     .places-container{
         top: 10px;
+        width: 300px;
     }
     
 }
@@ -8,7 +13,7 @@
 @media screen and (max-width: 768px) {
     .places-container{
         bottom: 10px;
-        
+        width: 200px;
     }
 }
 
@@ -23,13 +28,8 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    width: 300px;
+   
     background-color: white;
-}
-
-.places-container-list{
-    background-color: white;
-    list-style: none;
 }
 
 .map-container {

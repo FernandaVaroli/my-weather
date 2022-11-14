@@ -57,7 +57,7 @@ function Map() {
     return (
     <>
         <div className="places-container">
-            <PlacesAutocomplete className="places-container-list" setCoordinatesCallback={setMarkerPosition} />
+            <PlacesAutocomplete setCoordinatesCallback={setMarkerPosition} />
         </div>
       
         <div className="daily-temp">
