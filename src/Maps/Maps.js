@@ -47,6 +47,13 @@ function Map() {
         
     }, [markerPosition])
 
+    const mapClickCallback = function (event){
+        setMarkerPosition({
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng()
+        });
+    }
+
     return (
     <>
         <div className="places-container">
@@ -62,12 +69,10 @@ function Map() {
             
         </div>
 
-
-        
-
         <GoogleMap 
             mapContainerClassName = "map-container"
             zoom={10}
+            onClick={mapClickCallback}
             center={markerPosition || {lat:43.45, lng:-80.49}}
         >
             {markerPosition && <Marker position={markerPosition} />}
