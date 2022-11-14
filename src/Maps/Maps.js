@@ -3,15 +3,8 @@ import { GoogleMap, useLoadScript, Marker, OverlayView } from "@react-google-map
 import './Maps.css';
 import DailyTemp from "./DailyTemp";
 import axios from "axios";
-import usePlacesAutocomple, {getGeocode, getLatLng} from "use-places-autocomplete";
-import {
-    Combobox,
-    ComboboxInput,
-    ComboboxPopover,
-    ComboboxList,
-    ComboboxOption
-} from "@reach/combobox";
-import "@reach/combobox/styles.css";
+import PlacesAutocomplete from "../PlacesAutoComplete/PlacesAutoComplete";
+
 
 export default function Maps(){
     const { isLoaded } = useLoadScript({
@@ -102,33 +95,3 @@ function Map() {
     )
 }
 
-const PlacesAutocomplete = ({setCoordinatesCallback}) => {
-    const {
-        ready,
-        value,
-        setValue,
-        suggestions: {status, data},
-        clearSuggestions,
-    } = usePlacesAutocomple();
-
-    const handleSelect = async(address) => {
-        setValue(address, false);
-        clearSuggestions();
-
-        const results = await getGeocode({address});
-        const {lat, lng} = await getLatLng(results[0]); 
-        setCoordinatesCallback({lat, lng});
-    }
-
-    return <Combobox onSelect={handleSelect}>
-        <ComboboxInput value={value} onChange={(e) => setValue(e.target.value)} disabled={!ready}
-        className="combobox-input" placeholder="Search an address"
-        />
-        <ComboboxPopover>
-            <ComboboxList>
-                {status === "OK" && data.map(({place_id, description}) => (
-                <ComboboxOption key={place_id} value={description}/>))}
-            </ComboboxList>
-        </ComboboxPopover>
-    </Combobox>;
-}
